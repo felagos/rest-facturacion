@@ -13,6 +13,6 @@ public class AppConfig implements WebMvcConfigurer {
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+		
 		
 }

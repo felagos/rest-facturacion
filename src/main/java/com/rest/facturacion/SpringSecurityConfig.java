@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import com.rest.facturacion.filter.JWTAuthenticationFilter;
 import com.rest.facturacion.services.JpaUserDetailService;
@@ -29,18 +28,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	
-
-		
+			
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder build) throws Exception {
 		build.userDetailsService(userService).passwordEncoder(passwordEncoder);
 	}
-	
-	@Override
-    public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/css/**", "/js/**", "/images/**", "/font/**", "/favicon.ico");
-    }
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
