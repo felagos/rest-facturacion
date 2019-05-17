@@ -1,4 +1,4 @@
-package com.jpa.data.controller;
+package com.rest.facturacion.controller;
 
 import java.util.List;
 
@@ -10,13 +10,13 @@ import com.rest.facturacion.entities.Cliente;
 import com.rest.facturacion.services.interfaces.IClientService;
 
 @RestController
-@RequestMapping("/api/cliente")
+@RequestMapping("/api/clientes")
 public class ClienteRestController {
 	
 	@Autowired
 	private IClientService clienteService;
 	
-	@GetMapping("/listar")
+	@GetMapping(value = "/listar")
 	public List<Cliente> listar() {
 		return this.clienteService.findAll();
 	}

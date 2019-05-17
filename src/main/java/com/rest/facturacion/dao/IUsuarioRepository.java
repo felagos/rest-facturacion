@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.rest.facturacion.entities.Usuario;
 
-
 @Repository
 public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 	

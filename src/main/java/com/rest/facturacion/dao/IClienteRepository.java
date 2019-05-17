@@ -5,9 +5,11 @@ import java.util.Date;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.rest.facturacion.entities.Cliente;
 
+@Repository
 public interface IClienteRepository extends PagingAndSortingRepository<Cliente, Long> {
 	
 	public Cliente findByCreatedAt(Date date);

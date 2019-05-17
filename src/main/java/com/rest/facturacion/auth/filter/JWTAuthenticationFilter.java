@@ -1,4 +1,4 @@
-package com.rest.facturacion.filter;
+package com.rest.facturacion.auth.filter;
 
 import java.io.IOException;
 import java.util.Collection;
