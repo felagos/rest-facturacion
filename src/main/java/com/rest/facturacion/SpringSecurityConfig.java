@@ -19,6 +19,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.rest.facturacion.auth.filter.JWTAuthenticationFilter;
 import com.rest.facturacion.auth.filter.JWTAutherizationFilter;
 import com.rest.facturacion.services.JpaUserDetailService;
+import com.rest.facturacion.services.interfaces.IJwtService;
 
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
@@ -29,6 +30,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private IJwtService jwtService;
 			
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder build) throws Exception {
@@ -41,8 +45,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors()
 		.and().authorizeRequests().antMatchers("/").permitAll()
 		.anyRequest().authenticated()
-		.and().addFilter(new JWTAuthenticationFilter(authenticationManager()))
-		.addFilter(new JWTAutherizationFilter(authenticationManager()))
+		.and().addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtService))
+		.addFilter(new JWTAutherizationFilter(authenticationManager(), jwtService))
 		.csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

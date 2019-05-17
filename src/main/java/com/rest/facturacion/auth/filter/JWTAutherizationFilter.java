@@ -18,15 +18,19 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rest.facturacion.auth.SimpleGrantedAuthorityMixin;
+import com.rest.facturacion.services.interfaces.IJwtService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 
 public class JWTAutherizationFilter extends BasicAuthenticationFilter {
+	
+	private IJwtService jwtService;
 
-	public JWTAutherizationFilter(AuthenticationManager authenticationManager) {
+	public JWTAutherizationFilter(AuthenticationManager authenticationManager, IJwtService jwtService) {
 		super(authenticationManager);
+		this.jwtService = jwtService;
 	}
 
 	@Override
