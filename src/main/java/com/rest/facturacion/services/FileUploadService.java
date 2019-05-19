@@ -56,6 +56,7 @@ public class FileUploadService implements IFileUploadService {
 	
 	@Override
 	public void deleteFile(String filename) {
+		if(Paths.get(uploadDir) == null) return;
 		Path root = Paths.get(uploadDir).resolve(filename).toAbsolutePath();
 		File file = root.toFile();
 		
