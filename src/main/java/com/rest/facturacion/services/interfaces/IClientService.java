@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.rest.facturacion.entities.Cliente;
+import com.rest.facturacion.exceptions.ClienteNotFoundException;
 
 public interface IClientService {
 
@@ -15,5 +16,5 @@ public interface IClientService {
 	public Cliente findOne(Long id);
 	public void delete(Long id);
 	public Cliente fetchClientWithFacturaById(Long id);
-	
+	public boolean existsClientId(Long id);	
 }

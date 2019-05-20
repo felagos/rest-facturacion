@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.rest.facturacion.dao.IClienteRepository;
 import com.rest.facturacion.entities.Cliente;
+import com.rest.facturacion.exceptions.ClienteNotFoundException;
 import com.rest.facturacion.services.interfaces.IClientService;
 
 @Service
@@ -32,6 +33,12 @@ public class ClienteService implements IClientService {
 	public void save(Cliente cliente) {
 		this.clienteDAO.save(cliente);
 	}
+	
+	@Override
+	@Transactional
+	public boolean existsClientId(Long id) {
+		return this.clienteDAO.existsById(id);
+	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -45,7 +52,6 @@ public class ClienteService implements IClientService {
 	@Transactional
 	public void delete(Long id) {
 		this.clienteDAO.deleteById(id);
-		
 	}
 
 	@Override
