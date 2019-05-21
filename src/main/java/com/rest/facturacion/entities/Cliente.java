@@ -117,6 +117,12 @@ public class Cliente {
 	public void setFacturas(List<Factura> facturas) {
 		this.facturas = facturas;
 	}
+
+	@Override
+	public String toString() {
+		return "Cliente [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email
+				+ ", createdAt=" + createdAt + ", foto=" + foto + ", facturas=" + facturas + "]";
+	}
 	
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +46,7 @@ public class ClienteRestController {
 		return clientes.getContent();
 	}
 
-	@GetMapping("/borrar/{id}")
+	@DeleteMapping("/borrar/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public ResponseEntity<Response> borrar(@PathVariable("id") Long id, RedirectAttributes flash) {
 		Cliente cliente = this.clienteService.findOne(id);
@@ -66,6 +67,12 @@ public class ClienteRestController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public void guardar(@Valid @RequestBody Cliente cliente) {
 		this.clienteService.save(cliente);
+	}
+	
+	@GetMapping("/findOne/{id}")
+	@ResponseStatus(code = HttpStatus.OK)
+	public Cliente buscarCliente(@PathVariable(name = "id") Long id) {
+		return this.clienteService.findOne(id);
 	}
 
 }
