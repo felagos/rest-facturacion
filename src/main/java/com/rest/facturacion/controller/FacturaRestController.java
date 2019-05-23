@@ -1,6 +1,7 @@
 package com.rest.facturacion.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -42,15 +43,10 @@ public class FacturaRestController {
 		return productos;
 	}
 	
-	@RequestMapping(value = "/crear", method = RequestMethod.POST)
+	@PostMapping("/crear")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public void crearFactura(Factura factura,
-			@RequestParam(name = "itemsId[]", required = false) Long[] itemsId,
-			@RequestParam(name = "cantidad") Integer[] cantidad) {
+	public void crearFactura(@Valid @RequestBody Factura factura) {
 		
-		logger.debug(factura.toString());
-		System.out.println("factura: "+factura.toString());
-		System.out.println("cantidad: "+cantidad.length);
 	}
 
 }
