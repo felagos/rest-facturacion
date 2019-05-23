@@ -109,7 +109,11 @@ public class Factura {
 		return total;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Factura [id=" + id + ", descripcion=" + descripcion + ", observacion=" + observacion + ", createdAt="
+				+ createdAt + ", cliente=" + cliente + ", itemFacturas=" + itemFacturas + "]";
+	}
 	
 
 }
