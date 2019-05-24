@@ -10,10 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.rest.facturacion.dao.IClienteRepository;
 import com.rest.facturacion.entities.Cliente;
-import com.rest.facturacion.exceptions.ClienteNotFoundException;
 import com.rest.facturacion.services.interfaces.IClientService;
 
 @Service

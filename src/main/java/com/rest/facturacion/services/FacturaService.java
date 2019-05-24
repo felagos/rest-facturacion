@@ -1,7 +1,9 @@
 package com.rest.facturacion.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.rest.facturacion.dao.IFacturaRepository;
 import com.rest.facturacion.dao.IProductoRepository;
+import com.rest.facturacion.dto.FacturaDTO;
 import com.rest.facturacion.entities.Factura;
 import com.rest.facturacion.entities.Producto;
+import com.rest.facturacion.exceptions.NotFoundException;
 import com.rest.facturacion.services.interfaces.IFacturaService;
 
 @Service
@@ -24,6 +28,9 @@ public class FacturaService implements IFacturaService {
 	
 	@Autowired
 	private IFacturaRepository facturaDAO;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -60,8 +67,14 @@ public class FacturaService implements IFacturaService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Factura getFacturaById(Long id) {
-		return this.facturaDAO.fetchFacturaById(id);
+	public FacturaDTO getFacturaById(Long id) throws NotFoundException {
+		Factura factura = this.facturaDAO.fetchFacturaById(id);
+		if(factura == null) throw new NotFoundException("NOT FOUND");
+		
+		factura.getCliente().setFacturas(new ArrayList<>());
+		FacturaDTO dto = modelMapper.map(factura, FacturaDTO.class);
+		
+		return dto;
 	}
 
 }

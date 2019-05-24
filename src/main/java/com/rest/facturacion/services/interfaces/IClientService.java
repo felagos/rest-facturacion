@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import com.rest.facturacion.entities.Cliente;
-import com.rest.facturacion.exceptions.ClienteNotFoundException;
 
 public interface IClientService {
 
