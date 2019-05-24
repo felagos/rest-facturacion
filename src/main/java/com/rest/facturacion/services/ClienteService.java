@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.rest.facturacion.dao.IClienteRepository;
 import com.rest.facturacion.entities.Cliente;
+import com.rest.facturacion.exceptions.NotFoundException;
 import com.rest.facturacion.services.interfaces.IClientService;
 
 @Service
@@ -40,10 +41,11 @@ public class ClienteService implements IClientService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Cliente findOne(Long id) {
+	public Cliente findOne(Long id) throws NotFoundException {
 		boolean exists = this.clienteDAO.findById(id).isPresent();
-		if(exists) return this.clienteDAO.findById(id).get();
-		return null;
+		if(!exists) throw new NotFoundException("NOT FOUND");
+		
+		return this.clienteDAO.findById(id).get();
 	}
 
 	@Override

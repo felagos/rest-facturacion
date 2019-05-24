@@ -40,11 +40,10 @@ public class FacturaRestController {
 
 	@PostMapping("/crear/{id}")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ResponseEntity<?> crearFactura(@Valid @RequestBody Factura factura,
+	public ResponseEntity<String> crearFactura(@Valid @RequestBody Factura factura,
 			@PathVariable(name = "id", required = true) Long idClient) {
-		Cliente cliente = this.clienteService.findOne(idClient);
-
-		if (cliente != null) {
+		try {
+			Cliente cliente = this.clienteService.findOne(idClient);
 			factura.setCliente(cliente);
 
 			for (int i = 0; i < factura.getItemFacturas().size(); i++) {
@@ -57,10 +56,11 @@ public class FacturaRestController {
 
 			this.facturaService.guardarFactura(factura);
 
-			return new ResponseEntity<String>("created", HttpStatus.CREATED);
+			return Response.createResponse("created", HttpStatus.CREATED);
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+			return Response.createResponse(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
-
-		return new ResponseEntity<String>("cliente not found", HttpStatus.NOT_FOUND);
 
 	}
 
