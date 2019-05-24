@@ -22,3 +22,7 @@ spring.mvc.contentnegotiation.media-types.json = application/json
 
 spring.thymeleaf.cache = false
 
+application.jwt.key = eThWmZq4t6w9z$C&F)J@NcRfUjXn2r5u
+applicaion.jwt.expiration = 14400000
+
+server.port = 8081
