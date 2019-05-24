@@ -118,11 +118,4 @@ public class Cliente {
 		this.facturas = facturas;
 	}
 
-	@Override
-	public String toString() {
-		return "Cliente [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email
-				+ ", createdAt=" + createdAt + ", foto=" + foto + ", facturas=" + facturas + "]";
-	}
-	
-	
 }

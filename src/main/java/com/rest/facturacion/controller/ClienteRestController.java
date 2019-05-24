@@ -37,13 +37,13 @@ public class ClienteRestController {
 		return this.clienteService.findAll();
 	}
 
-	@GetMapping("/listar/{page}")
+	/*@GetMapping("/listar/{page}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Cliente> listarPage(@PathVariable(value = "page") int page) {
 		Pageable pageRequest = PageRequest.of(page, 5);
 		Page<Cliente> clientes = this.clienteService.findAll(pageRequest);
 		return clientes.getContent();
-	}
+	}*/
 
 	@DeleteMapping("/borrar/{id}")
 	@ResponseStatus(code = HttpStatus.OK)

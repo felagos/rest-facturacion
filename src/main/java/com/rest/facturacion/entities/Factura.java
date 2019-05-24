@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,38 +24,42 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-
 @Entity
 @Table(name = "facturas")
 public class Factura {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotEmpty(message = "La descricpción es obligatoria")
 	private String descripcion;
-	
+
 	private String observacion;
-	
+
 	@Column(name = "created_at")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date createdAt;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_cliente")
 	@JsonBackReference
 	private Cliente cliente;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_factura")
 	private List<ItemFactura> itemFacturas;
-	
+
 	public Factura() {
 		this.itemFacturas = new ArrayList<>();
 	}
-	
+
+	@PrePersist
+	public void createDate() {
+		this.createdAt = new Date();
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -108,12 +113,5 @@ public class Factura {
 		Double total = this.itemFacturas.stream().map(item -> item.calcularImporte()).reduce(0.0, (a, b) -> a + b);
 		return total;
 	}
-	
-	@Override
-	public String toString() {
-		return "Factura [id=" + id + ", descripcion=" + descripcion + ", observacion=" + observacion + ", createdAt="
-				+ createdAt + ", cliente=" + cliente + ", itemFacturas=" + itemFacturas + "]";
-	}
-	
 
 }
