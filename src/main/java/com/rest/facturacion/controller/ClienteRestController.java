@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.rest.facturacion.Response;
 import com.rest.facturacion.entities.Cliente;
+import com.rest.facturacion.exceptions.NotFoundException;
+import com.rest.facturacion.response.Response;
 import com.rest.facturacion.services.interfaces.IClientService;
 import com.rest.facturacion.services.interfaces.IFileUploadService;
 
@@ -47,18 +48,14 @@ public class ClienteRestController {
 
 	@DeleteMapping("/borrar/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResponseEntity<Response> borrar(@PathVariable("id") Long id, RedirectAttributes flash) {
-		Cliente cliente = this.clienteService.findOne(id);
-		if (cliente == null) {
-			return ResponseEntity.badRequest().body(new Response(HttpStatus.NOT_FOUND, "Cliente no encontrado"));
+	public ResponseEntity<String> borrar(@PathVariable("id") Long id, RedirectAttributes flash) {
+		try {
+			this.clienteService.delete(id);
+			return Response.createResponse("created", HttpStatus.OK);
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+			return Response.createResponse(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
-
-		String foto = cliente.getFoto();
-		this.fileService.deleteFile(foto);
-
-		this.clienteService.delete(id);
-
-		return ResponseEntity.ok().body(new Response(HttpStatus.OK));
 
 	}
 
@@ -70,8 +67,14 @@ public class ClienteRestController {
 	
 	@GetMapping("/findOne/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public Cliente buscarCliente(@PathVariable(name = "id") Long id) {
-		return this.clienteService.findOne(id);
+	public ResponseEntity<?> buscarCliente(@PathVariable(name = "id") Long id) {
+		try {
+			Cliente cliente = this.clienteService.findOne(id);
+			return Response.createResponse(cliente, HttpStatus.OK);
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+			return Response.createResponse(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
 	}
 
 }

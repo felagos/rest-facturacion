@@ -50,7 +50,10 @@ public class ClienteService implements IClientService {
 
 	@Override
 	@Transactional
-	public void delete(Long id) {
+	public void delete(Long id) throws NotFoundException {
+		boolean exists = this.clienteDAO.findById(id).isPresent();
+		if(!exists) throw new NotFoundException("NOT FOUND");
+		
 		this.clienteDAO.deleteById(id);
 	}
 

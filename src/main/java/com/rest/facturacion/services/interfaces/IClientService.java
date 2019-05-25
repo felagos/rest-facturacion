@@ -13,7 +13,7 @@ public interface IClientService {
 	public Page<Cliente> findAll(Pageable pageable);
 	public void save(Cliente cliente);
 	public Cliente findOne(Long id) throws NotFoundException;
-	public void delete(Long id);
+	public void delete(Long id) throws NotFoundException;
 	public Cliente fetchClientWithFacturaById(Long id);
 	public boolean existsClientId(Long id);	
 }
