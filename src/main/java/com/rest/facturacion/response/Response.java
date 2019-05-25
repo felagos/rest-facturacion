@@ -8,5 +8,9 @@ public class Response {
 	public static <T> ResponseEntity<T> createResponse(T body, HttpStatus status){
 		return new ResponseEntity<T>(body, status);
 	}
+	
+	public static <T> ResponseEntity<T> createResponse(HttpStatus status){
+		return new ResponseEntity<T>(status);
+	}
 
 }

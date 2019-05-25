@@ -12,4 +12,5 @@ public class FacturaDTO {
 	private Date createdAt;
 	private ClienteDTO cliente;
 	private List<ItemFacturaDTO> itemFacturas;
+	private Double total;
 }
