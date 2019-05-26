@@ -1,28 +1,20 @@
 package com.rest.facturacion.auth.filter;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rest.facturacion.auth.SimpleGrantedAuthorityMixin;
 import com.rest.facturacion.services.interfaces.IJwtService;
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
+
 
 public class JWTAutherizationFilter extends BasicAuthenticationFilter {
 	
@@ -48,15 +40,10 @@ public class JWTAutherizationFilter extends BasicAuthenticationFilter {
 		UsernamePasswordAuthenticationToken auth = null;
 
 		try {
-			Claims data = Jwts.parser().setSigningKey("eThWmZq4t6w9z$C&F)J@NcRfUjXn2r5u".getBytes())
-					.parseClaimsJws(token).getBody();
 
-			String username = data.getSubject();
+			String username = this.jwtService.getUsername(token);
+			Collection<? extends GrantedAuthority> roles = this.jwtService.getRoles(token);
 
-			Collection<? extends GrantedAuthority> roles = Arrays
-					.asList(new ObjectMapper().addMixIn(SimpleGrantedAuthority.class, SimpleGrantedAuthorityMixin.class)
-							.readValue(data.get("authorities").toString().getBytes(), SimpleGrantedAuthority[].class));
-			
 			auth = new UsernamePasswordAuthenticationToken(username, null, roles);	
 
 		} catch (JwtException | IllegalArgumentException e) {

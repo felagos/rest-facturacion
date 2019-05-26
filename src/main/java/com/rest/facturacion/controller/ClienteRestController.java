@@ -34,8 +34,9 @@ public class ClienteRestController {
 	private IFileUploadService fileService;
 
 	@GetMapping(value = "/listar")
-	public List<Cliente> listar() {
-		return this.clienteService.findAll();
+	public ResponseEntity<List<Cliente>> listar() {
+		List<Cliente> clientes =  this.clienteService.findAll();
+		return Response.createResponse(clientes, HttpStatus.OK);
 	}
 
 	/*@GetMapping("/listar/{page}")
