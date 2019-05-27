@@ -11,7 +11,7 @@ import com.rest.facturacion.entities.Factura;
 @Repository
 public interface IFacturaRepository extends JpaRepository<Factura, Long> {
 	
-	@Query("select f from Factura f join fetch f.cliente c join fetch f.itemFacturas i join fetch i.producto where f.id = :id")
+	@Query("select f from Factura f join fetch f.cliente c left join fetch f.itemFacturas i left join fetch i.producto where f.id = :id")
 	public Factura fetchFacturaById(@Param("id") Long id);
 
 }
