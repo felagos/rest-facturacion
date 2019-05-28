@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ import com.rest.facturacion.response.Response;
 import com.rest.facturacion.services.interfaces.IClientService;
 import com.rest.facturacion.services.interfaces.IFacturaService;
 import com.rest.facturacion.services.interfaces.IFileGenerator;
+import com.rest.facturacion.util.ErrorsUtil;
 
 @RestController
 @RequestMapping("/api/factura")
@@ -46,9 +48,14 @@ public class FacturaRestController {
 
 	@PostMapping("/crear/{id}")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ResponseEntity<String> crearFactura(@Valid @RequestBody Factura factura,
+	public ResponseEntity<?> crearFactura(@Valid @RequestBody Factura factura, BindingResult results,
 			@PathVariable(name = "id", required = true) Long idClient) {
 		try {
+			if(results.hasErrors()) {
+				List<String> errors = ErrorsUtil.getErrors(results.getFieldErrors());
+				return Response.createResponse(errors, HttpStatus.BAD_REQUEST);
+			}
+			
 			Cliente cliente = this.clienteService.findOne(idClient);
 			factura.setCliente(cliente);
 

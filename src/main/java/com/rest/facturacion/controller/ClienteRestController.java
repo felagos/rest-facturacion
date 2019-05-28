@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import com.rest.facturacion.exceptions.NotFoundException;
 import com.rest.facturacion.response.Response;
 import com.rest.facturacion.services.interfaces.IClientService;
 import com.rest.facturacion.services.interfaces.IFileUploadService;
+import com.rest.facturacion.util.ErrorsUtil;
 
 @RestController
 @RequestMapping("/api/clientes")
@@ -62,8 +64,15 @@ public class ClienteRestController {
 
 	@PostMapping("/guardar")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public void guardar(@Valid @RequestBody Cliente cliente) {
+	public ResponseEntity<?> guardar(@Valid @RequestBody Cliente cliente, BindingResult results) {
+		if(results.hasErrors()) {
+			List<String> errors = ErrorsUtil.getErrors(results.getFieldErrors());
+			return Response.createResponse(errors, HttpStatus.BAD_REQUEST);
+		}
+		
 		this.clienteService.save(cliente);
+		
+		return Response.createResponse(HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/findOne/{id}")
