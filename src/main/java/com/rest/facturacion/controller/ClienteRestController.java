@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.rest.facturacion.entities.Cliente;
 import com.rest.facturacion.exceptions.NotFoundException;
 import com.rest.facturacion.response.Response;
@@ -51,7 +50,7 @@ public class ClienteRestController {
 
 	@DeleteMapping("/borrar/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResponseEntity<String> borrar(@PathVariable("id") Long id, RedirectAttributes flash) {
+	public ResponseEntity<String> borrar(@PathVariable("id") Long id) {
 		try {
 			this.clienteService.delete(id);
 			return Response.createResponse("created", HttpStatus.OK);
