@@ -21,7 +21,6 @@ import com.rest.facturacion.entities.Cliente;
 import com.rest.facturacion.exceptions.NotFoundException;
 import com.rest.facturacion.response.Response;
 import com.rest.facturacion.services.interfaces.IClientService;
-import com.rest.facturacion.services.interfaces.IFileUploadService;
 import com.rest.facturacion.util.ErrorsUtil;
 
 @RestController
@@ -30,9 +29,6 @@ public class ClienteRestController {
 
 	@Autowired
 	private IClientService clienteService;
-
-	@Autowired
-	private IFileUploadService fileService;
 
 	@GetMapping(value = "/listar")
 	public ResponseEntity<List<Cliente>> listar() {

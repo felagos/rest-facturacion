@@ -1,30 +1,21 @@
 package com.rest.facturacion.services;
 
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.rest.facturacion.dao.IFacturaRepository;
 import com.rest.facturacion.dao.IProductoRepository;
 import com.rest.facturacion.dto.FacturaDTO;
 import com.rest.facturacion.entities.Factura;
 import com.rest.facturacion.entities.Producto;
 import com.rest.facturacion.exceptions.NotFoundException;
-import com.rest.facturacion.file.pdf.FacturaPdfGenerator;
 import com.rest.facturacion.services.interfaces.IFacturaService;
 
 @Service
 public class FacturaService implements IFacturaService {
-	
-	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	private IProductoRepository productoDAO;
