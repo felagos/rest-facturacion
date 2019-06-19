@@ -40,13 +40,14 @@ public class ClienteRestController {
 		return Response.createResponse(clientes, HttpStatus.OK);
 	}
 
-	/*@GetMapping("/listar/{page}")
+	@GetMapping("/listarPage/{page}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<Cliente> listarPage(@PathVariable(value = "page") int page) {
-		Pageable pageRequest = PageRequest.of(page, 5);
+	public ResponseEntity<Page<Cliente>> listarPage(@PathVariable(value = "page") int page) {
+		Pageable pageRequest = PageRequest.of(page, 10);
 		Page<Cliente> clientes = this.clienteService.findAll(pageRequest);
-		return clientes.getContent();
-	}*/
+				
+		return Response.createResponse(clientes, HttpStatus.OK);
+	}
 
 	@DeleteMapping("/borrar/{id}")
 	@ResponseStatus(code = HttpStatus.OK)

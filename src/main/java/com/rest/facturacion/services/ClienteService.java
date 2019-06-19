@@ -59,16 +59,7 @@ public class ClienteService implements IClientService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Page<Cliente> findAll(Pageable pageable) {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Date date;
-		try {
-			date = format.parse ( "2017-08-25" );
-			this.clienteDAO.findByCreatedAt(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}   
-		
+	public Page<Cliente> findAll(Pageable pageable) {	
 		return this.clienteDAO.findAll(pageable);
 	}
 

@@ -71,9 +71,14 @@ public class JwtService implements IJwtService {
 	}
 
 	@Override
-	public Collection<? extends GrantedAuthority> getRoles(String token) {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<? extends GrantedAuthority> getRoles(String token) throws IOException {
+		Object roles = getClaims(token).get("authorities");
+
+		Collection<? extends GrantedAuthority> authorities = Arrays
+				.asList(new ObjectMapper().addMixIn(SimpleGrantedAuthority.class, SimpleGrantedAuthorityMixin.class)
+						.readValue(roles.toString().getBytes(), SimpleGrantedAuthority[].class));
+		
+		return authorities;
 	}
 
 	@Override

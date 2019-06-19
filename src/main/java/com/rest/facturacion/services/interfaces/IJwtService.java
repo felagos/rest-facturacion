@@ -18,7 +18,7 @@ public interface IJwtService {
 	
 	public String getUsername(String token);
 	
-	public Collection<? extends GrantedAuthority> getRoles(String token);
+	public Collection<? extends GrantedAuthority> getRoles(String token) throws IOException;
 	
 	public String resolve(String token);
 
